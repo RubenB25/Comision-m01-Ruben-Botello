@@ -5,20 +5,22 @@ import LoginForm from "./components/LoginForm";
 import NotFoundPage from "./pages/404Page";
 import PlaylistPage from "./pages/PlaylistPage";
 import PrivateRoutes from "./components/PrivateRoutes";
-import NewPlaylistPage from "./pages/NewPlaylistPage";
-import MusicPage from "./pages/MusicPage";
-import NewMusicPage from "./pages/NewMusicPage";
+import NewPlaylist from "./pages/NewPlaylist";
+import MusicPage from "./pages/MusicsPage";
+import Navbar from "../src/components/Navbar";
 
 function AppRouter() {
   return (
+    <div>
+      <Navbar />
     <Routes>
       {/* Rutas Protegidas */}
       <Route element={<PrivateRoutes />}>
+  
         <Route path="/" element={<HomePage />} />
         <Route path="/playlist" element={<PlaylistPage />} />
-        <Route path="/playlist/new" element={<NewPlaylistPage />} />
+        <Route path="/playlist/new" element={<NewPlaylist />} />
         <Route path="/playlist/:playlistId" element={<MusicPage />} />
-        <Route path="/music/:playlistId" element={<NewMusicPage />} />
       </Route>
 
       {/* Rutas Públicas */}
@@ -27,6 +29,7 @@ function AppRouter() {
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    </div>
   );
 }
 export default AppRouter;

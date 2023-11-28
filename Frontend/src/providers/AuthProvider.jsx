@@ -16,22 +16,24 @@ function AuthProvider({ children }) {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setAuth(null);
-    window.location.replace("/login");
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = localStorage.getItem("token");
-    // si no tenemos alguno de los dos campos en el localStorage borramos todo
-    if (!user || !token) {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
+    setTimeout(() => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = localStorage.getItem("token");
 
-      setAuth(null);
-      return;
-    } else {
+      // si no tenemos alguno de los dos campos en el localStorage borramos todo
+      if (!user || !token) {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        setAuth(null);
+        return;
+      }
+
       setAuth({ user, token });
-    }
+    }, 1000);
   }, []);
 
   return (

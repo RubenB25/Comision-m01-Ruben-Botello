@@ -1,0 +1,10 @@
+.customNavbar {
+    background-color: #f07777; /* Cambiar este color al que desees */
+    /* Otros estilos para el Navbar */
+  }
+  
+  /* Estilos para el texto del enlace 'navbar-brand' */
+  .brandText {
+    color: #cecece; /* Cambiar este color al que desees */
+    /* Otros estilos para el texto */
+  }
