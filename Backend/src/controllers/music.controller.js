@@ -1,5 +1,5 @@
-import { MusicModel } from '../models/Music.js';
-import { PlaylistModel } from '../models/Playlist.js';
+import { CommentModel } from '../models/Comment.js';
+import { PostModel } from '../models/Post.js';
 import { isAuthor } from './playlist.controller.js';
 
 export const ctrlCreateMusic = async (req, res) => {
@@ -13,16 +13,16 @@ export const ctrlCreateMusic = async (req, res) => {
   }
 
   try {
-    const music = new MusicModel({
+    const music = new CommentModel({
       ...req.body,
-      playlist: playlistId,
+      posts: playlistId,
     });
 
     await music.save();
 
-    await PlaylistModel.findOneAndUpdate(
+    await PostModel.findOneAndUpdate(
       { _id: playlistId },
-      { $push: { musics: music._id } }
+      { $push: { comments: music._id } }
     );
 
     res.status(201).json(music);
@@ -43,9 +43,9 @@ export const ctrlListMusics = async (req, res) => {
   }
 
   try {
-    const musics = await MusicModel.find({ playlist: playlistId }, [
+    const musics = await CommentModel.find({ posts: playlistId }, [
       '-__v',
-    ]).populate('playlist', ['-musics', '-author', '-__v']);
+    ]).populate('post', ['-musics', '-author', '-__v']);
 
     res.status(200).json(musics);
   } catch (error) {
@@ -64,10 +64,10 @@ export const ctrlGetMusicById = async (req, res) => {
   }
 
   try {
-    const music = await MusicModel.findOne({
+    const music = await CommentModel.findOne({
       _id: musicId,
-      playlist: playlistId,
-    }).populate('playlist');
+      posts: playlistId,
+    }).populate('posts');
 
     if (!music) return res.status(404).json({ error: "Music doesn't exist" });
 
@@ -88,7 +88,7 @@ export const ctrlUpdateMusic = async (req, res) => {
   }
 
   try {
-    const music = await MusicModel.findOne({ _id: musicId });
+    const music = await CommentModel.findOne({ _id: musicId });
 
     if (!music) {
       return res.status(404).json({ error: "Music doesn't exist" });
@@ -115,11 +115,11 @@ export const ctrlDeleteMusic = async (req, res) => {
   }
 
   try {
-    await MusicModel.findOneAndDelete({ _id: musicId, playlist: playlistId });
+    await CommentModel.findOneAndDelete({ _id: musicId, posts: playlistId });
 
-    await PlaylistModel.findOneAndUpdate(
+    await PostModel.findOneAndUpdate(
       { _id: playlistId },
-      { $pull: { musics: musicId } }
+      { $pull: { comments: musicId } }
     );
 
     res.status(200).json();

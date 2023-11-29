@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose';
 
-const PlaylistSchema = new Schema({
+const PostSchema = new Schema({
   title: {
     type: String,
     required: true,
   },
-  musics: [
+  comments: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Music',
+      ref: 'Comment',
     },
   ],
   author: {
@@ -21,4 +21,4 @@ const PlaylistSchema = new Schema({
   versionKey: false,
 });
 
-export const PlaylistModel = model('Playlist', PlaylistSchema);
+export const PostModel = model('Post', PostSchema);

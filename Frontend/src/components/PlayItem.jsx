@@ -26,7 +26,7 @@ const PlayItem = ({ playlist, getPlaylist, onClick }) => {
         <h2>{playlist.title}</h2>
         <p>
           <b>{playlist.author.username}</b>
-          <span>{playlist.musics.length}</span>
+          <span>{playlist.comments.length}</span>
         </p>
       </section>
       <div>
@@ -37,12 +37,13 @@ const PlayItem = ({ playlist, getPlaylist, onClick }) => {
           <HiOutlinePencilAlt />
         </Link>
         <Link
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          className="font-danger"
           data-bs-toggle="modal"
           data-bs-target={"#modal" + playlist._id}
-          style={{ fontSize: "30px", color: "red" }}
+          style={{ fontSize: "50px", color: "black" }}
         >
           <HiOutlineTrash />
         </Link>

@@ -72,14 +72,13 @@ const MusicsPage = () => {
 
   return (
     <div>
-      <Navbar />
       <h1>{playlist.title}</h1>
       <form onSubmit={handleCreateNewMusic} ref={formRef}>
         <input type="text" name="name" placeholder="music name" />
         <input type="text" name="author" placeholder="author" />
         <button>Create new Music</button>
       </form>
-      {playlist.musics.map((music) => {
+      {playlist.comments.map((music) => {
         return (
           <div key={music.id} className="music">
             <h2>{music.name}</h2>

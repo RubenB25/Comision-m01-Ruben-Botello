@@ -21,10 +21,10 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    playlists: [
+    posts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Playlist',
+        ref: 'Post',
       },
     ],
   },

@@ -1,3 +1,6 @@
+*{
+ z-index: 2; 
+}
 .customNavbar {
     background-color: #f07777; /* Cambiar este color al que desees */
     /* Otros estilos para el Navbar */

@@ -17,8 +17,7 @@ const DeletePlaylistModel = ({ playlistId, getPlaylist }) => {
       if (res.status !== 200) return alert("Error deleting playlist");
 
       // refresh page
-      ref.current.click();
-      getPlaylist();
+
     });
   };
 

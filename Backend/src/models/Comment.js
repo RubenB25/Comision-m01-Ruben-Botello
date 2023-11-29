@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const MusicSchema = new Schema({
+const CommentSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,13 +13,13 @@ const MusicSchema = new Schema({
     type: Number,
     default: new Date(Date.now()).getFullYear(),
   },
-  playlist: {
+  posts: {
     type: Schema.Types.ObjectId,
-    ref: 'Playlist',
+    ref: 'Post',
   },
 }, {
   timestamps: true,
   versionKey: false,
 });
 
-export const MusicModel = model('Music', MusicSchema);
+export const CommentModel = model('Comment', CommentSchema);

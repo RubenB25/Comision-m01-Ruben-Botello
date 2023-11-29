@@ -1,5 +1,5 @@
-import { PlaylistModel } from '../models/Playlist.js';
-import { MusicModel } from '../models/Music.js';
+import { PostModel } from '../models/Post.js';
+import { CommentModel } from '../models/Comment.js';
 
 export const ctrlCreatePlaylist = async (req, res) => {
   const userId = req.user._id;
@@ -7,7 +7,7 @@ export const ctrlCreatePlaylist = async (req, res) => {
   try {
     const { title } = req.body;
 
-    const playlist = new PlaylistModel({
+    const playlist = new PostModel({
       title,
       author: userId,
     });
@@ -24,9 +24,9 @@ export const ctrlListPlaylist = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const playlists = await PlaylistModel.find({ author: userId })
+    const playlists = await PostModel.find({ author: userId })
       .populate('author', ['username', 'avatar'])
-      .populate('musics', ['name', 'artist', 'year']);
+      .populate('comments', ['name', 'artist', 'year']);
 
     return res.status(200).json(playlists);
   } catch (error) {
@@ -39,12 +39,12 @@ export const ctrlGetPlaylist = async (req, res) => {
   const { playlistId } = req.params;
 
   try {
-    const playlist = await PlaylistModel.findOne({
+    const playlist = await PostModel.findOne({
       _id: playlistId,
       author: userId,
     })
       .populate('author', ['username', 'avatar'])
-      .populate('musics', ['name', 'artist', 'year']);
+      .populate('comments', ['name', 'artist', 'year']);
 
     if (!playlist) {
       return res.status(404).json({ error: 'Playlist not found' });
@@ -61,7 +61,7 @@ export const ctrlUpdatePlaylist = async (req, res) => {
   const { playlistId } = req.params;
 
   try {
-    const playlist = await PlaylistModel.findOne({
+    const playlist = await PostModel.findOne({
       _id: playlistId,
       author: userId,
     });
@@ -85,7 +85,7 @@ export const ctrlDeletePlaylist = async (req, res) => {
   const { playlistId } = req.params;
 
   try {
-    const playlist = await PlaylistModel.findOne({
+    const playlist = await PostModel.findOne({
       _id: playlistId,
       author: userId,
     });
@@ -94,9 +94,9 @@ export const ctrlDeletePlaylist = async (req, res) => {
       return res.status(404).json({ error: 'Playlist not found' });
     }
 
-    await MusicModel.deleteMany({ _id: { $in: playlist.musics } });
+    await CommentModel.deleteMany({ _id: { $in: playlist.comments } });
 
-    await PlaylistModel.findOneAndDelete({
+    await PostModel.findOneAndDelete({
       _id: playlistId,
       author: userId,
     });
@@ -109,7 +109,7 @@ export const ctrlDeletePlaylist = async (req, res) => {
 
 export const isAuthor = async ({ playlistId, userId }) => {
   try {
-    const playlist = await PlaylistModel.findOne({
+    const playlist = await PostModel.findOne({
       _id: playlistId,
       author: userId,
     });
