@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import PlayItem from "./PlayItem";
+import PlayItem from "./PostItem";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Playlist.module.css";
-const Playlist = ({ playlists, getPlaylist }) => {
+const Post = ({ posts, getPost}) => {
   // la información que NO vamos a modificar.
   const [search, setSearch] = useState("");
-  const [filterPlaylists, setFilterPlaylists] = useState(playlists);
+  const [filterPosts, setFilterPosts] = useState(posts);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const filtered = playlists.filter((play) => {
-      return play.title.toLowerCase().includes(search.toLowerCase());
+    const filtered = posts.filter((postF) => {
+      return postF.title.toLowerCase().includes(search.toLowerCase());
     });
 
-    setFilterPlaylists(filtered);
-  }, [search, playlists]);
+    setFilterPosts(filtered);
+  }, [search, posts]);
 
   return (
     <div style={{ minWidth: "420px" }}>
@@ -29,14 +29,14 @@ const Playlist = ({ playlists, getPlaylist }) => {
         }}
       />
       <>
-        {filterPlaylists.map((playlist) => {
+        {filterPosts.map((post) => {
           return (
             <PlayItem
-              getPlaylist={getPlaylist}
-              key={playlist._id}
-              playlist={playlist}
+              getPost={getPost}
+              key={post._id}
+              post={post}
               onClick={() => {
-                navigate(`/playlist/${playlist._id}`);
+                navigate(`/playlist/${post._id}`);
               }}
             />
           );
@@ -49,4 +49,4 @@ const Playlist = ({ playlists, getPlaylist }) => {
   );
 };
 
-export default Playlist;
+export default Post;

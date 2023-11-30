@@ -7,8 +7,8 @@ import { config } from './src/settings/config.js';
 import { startConnection } from './src/settings/database.js';
 
 import { authRouter } from './src/routes/auth.routes.js';
-import { musicRouter } from './src/routes/music.routes.js';
-import { playlistRouter } from './src/routes/playlist.routes.js';
+import { commentRouter } from './src/routes/comment.routes.js';
+import { postRouter } from './src/routes/post.routes.js';
 import { validateToken } from './src/middlewares/validate-token.js';
 import { authHeader } from './src/models/validations/auth-validation.js';
 
@@ -24,8 +24,8 @@ app.use(helmet());
 app.use(morgan('dev'));
 
 app.use('/api/auth', authRouter);
-app.use('/api/playlist', authHeader, validateToken, playlistRouter);
-app.use('/api/musics', authHeader, validateToken, musicRouter);
+app.use('/api/post', authHeader, validateToken, postRouter);
+app.use('/api/comment', authHeader, validateToken, commentRouter);
 
 app.listen(config.port, async () => {
   await startConnection({ uri: config.mongo, database: config.database });

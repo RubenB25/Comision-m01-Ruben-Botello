@@ -3,24 +3,24 @@ import HomePage from "./pages/HomePage";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import NotFoundPage from "./pages/404Page";
-import PlaylistPage from "./pages/PlaylistPage";
+import PostsPage from "./pages/PostsPage";
 import PrivateRoutes from "./components/PrivateRoutes";
-import NewPlaylistPage from "./pages/NewPlaylistPage";
-import MusicPage from "./pages/MusicPage";
-import NewMusicPage from "./pages/NewMusicPage";
-import CardsLayout from "./components/CardsLayout";
-import RecentsPage from "./pages/RecentsPage";
+import NewPostPage from "./pages/NewPostPage";
+import PostPage from "./pages/PostPage";
+// import MusicPage from "./pages/MusicPage";
+import NewCommentPage from "./pages/NewCommentPage"; 
+import RecentPage from "./pages/RecentPage";
 function AppRouter() {
   return (
     <Routes>
       {/* Rutas Protegidas */}
       <Route element={<PrivateRoutes />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/playlist" element={<PlaylistPage />} />
-        <Route path="/recents" element={<RecentsPage />} />
-        <Route path="/playlist/new" element={<NewPlaylistPage />} />
-        <Route path="/playlist/:playlistId" element={<MusicPage />} />
-        <Route path="/music/:playlistId" element={<NewMusicPage />} />
+        <Route path="/posts" element={<PostsPage />} />
+        <Route path="/recent" element={<RecentPage />} />
+        <Route path="/post/new" element={<NewPostPage />} />
+        <Route path="/post/:postId" element={<PostPage />} />
+        <Route path="/comment/:postId" element={<NewCommentPage />} />
       </Route>
 
       {/* Rutas Públicas */}

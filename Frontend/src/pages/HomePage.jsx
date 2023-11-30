@@ -13,8 +13,8 @@ function HomePage() {
         rerum sint eius quibusdam animi assumenda accusantium deleniti,
         cupiditate exercitationem asperiores?
       </p>
-      <Link className="btn btn-primary btn-lg" to="/playlist">
-        Go to Playlist
+      <Link className="btn btn-primary btn-lg" to="/posts">
+        Tus publicaciones
       </Link>
     </div>
   );

@@ -4,26 +4,27 @@ import { AuthContext } from "../providers/AuthProvider";
 import { API_URL } from "../utils/consts";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import Swal from "sweetalert2";
+import styles from "../styles/Post.module.css";
 
-const MusicPage = () => {
-  const { playlistId } = useParams();
+const PostPage = () => {
+  const { postId } = useParams();
 
   const { auth } = useContext(AuthContext);
 
-  const [playlist, setPlaylist] = useState(null);
+  const [post, setPost] = useState(null);
 
-  const getPlaylist = (playlistId) => {
-    fetch(`${API_URL}/playlist/${playlistId}`, {
+  const getPost = (postId) => {
+    fetch(`${API_URL}/post/${postId}`, {
       headers: {
         Authorization: auth.token,
       },
     })
       .then((res) => res.json())
-      .then((data) => setPlaylist(data));
+      .then((data) => setPost(data));
   };
 
-  const handleDelete = (playlistId, musicId) => {
-    return fetch(`${API_URL}/musics/${playlistId}/${musicId}`, {
+  const handleDelete = (postId, commentId) => {
+    return fetch(`${API_URL}/comment/${postId}/${commentId}`, {
       method: "DELETE",
       headers: {
         Authorization: auth.token,
@@ -32,10 +33,10 @@ const MusicPage = () => {
   };
 
   useEffect(() => {
-    getPlaylist(playlistId);
+    getPost(postId);
   }, []);
 
-  if (!playlist) {
+  if (!post) {
     return (
       <div className="container-fluid d-flex flex-column justify-content-center align-items-center mt-4">
         <h3 className="text-center mt-4">Loading...</h3>
@@ -44,11 +45,11 @@ const MusicPage = () => {
   }
 
   return (
-    <div className="container-fluid d-flex flex-column justify-content-center align-items-center mt-4">
-      <h1 className="text-center mt-4">{playlist.title}</h1>
+    <div className={styles.container}>
+      <h1 className="text-center mt-4">{post.title}</h1>
       <div className="d-flex flex-row align-items-center gap-2">
         <img
-          src={playlist.author.avatar}
+          src={post.author.avatar}
           height={60}
           width={60}
           style={{
@@ -56,30 +57,33 @@ const MusicPage = () => {
             borderRadius: "50%",
           }}
         />
-        <h3>@{playlist.author.username}</h3>
+        <h3>@{post.author.username}</h3>
       </div>
       <div className="w-50 d-flex flex-column gap-2 mt-4">
-        <div>
-          <Link className="btn btn-success" to={`/music/${playlistId}`}>
+        <img src={post.url} alt="Imagen Url"/>
+        <p className="text-center">{post.content}</p>
+        <h3 className="text-center">Comentarios</h3>
+    
+        <table className="table table-bordered">
+          <thead>
+            <tr className="text-center" style={{height:"200px"}}>
+              <th scope="col">
+              <div>
+          <Link className="btn btn-success" to={`/comment/${postId}`}>
             Create
           </Link>
         </div>
-        <table className="table table-bordered">
-          <thead>
-            <tr className="text-center">
-              <th scope="col">Song</th>
-              <th scope="col">Artist</th>
-              <th scope="col">Year</th>
-              <th scope="col">Actions</th>
+              </th>
+    
             </tr>
           </thead>
           <tbody>
-            {playlist.comments.map((music) => {
+            {post.comments.map((comment) => {
               return (
-                <tr key={music._id} className="text-center">
-                  <td>{music.name}</td>
-                  <td>{music.artist}</td>
-                  <td>{music.year}</td>
+                <tr key={comment._id} className="text-center">
+                  <td>{comment.name}</td>
+                  <td>{comment.artist}</td>
+                  <td>{comment.year}</td>
                   <td>
                     <button
                       className="btn btn-danger"
@@ -94,7 +98,7 @@ const MusicPage = () => {
                           confirmButtonText: "Yes, delete it!",
                         }).then((result) => {
                           if (result.isConfirmed) {
-                            handleDelete(playlistId, music._id).then((res) => {
+                            handleDelete(postId, comment._id).then((res) => {
                               if (res.status !== 200) {
                                 return Swal.fire({
                                   icon: "error",
@@ -108,7 +112,7 @@ const MusicPage = () => {
                                   text: "Your file has been deleted.",
                                   icon: "success",
                                 });
-                                getPlaylist(playlistId);
+                                getPost(postId);
                               }
                             });
                           }
@@ -131,4 +135,4 @@ const MusicPage = () => {
   );
 };
 
-export default MusicPage;
+export default PostPage;

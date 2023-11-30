@@ -4,23 +4,23 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 
-const NewMusicPage = () => {
-  const { playlistId } = useParams();
+const NewCommentPage = () => {
+  const { postId } = useParams();
 
-  const [playlist, setPlaylist] = useState(null);
+  const [post, setPost] = useState(null);
 
   const { auth } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const getPlaylist = (playlistId) => {
-    fetch(`${API_URL}/playlist/${playlistId}`, {
+  const getPost = (postId) => {
+    fetch(`${API_URL}/post/${postId}`, {
       headers: {
         Authorization: auth.token,
       },
     })
       .then((res) => res.json())
-      .then((data) => setPlaylist(data));
+      .then((data) => setPost(data));
   };
 
   const handleSubmit = async (e) => {
@@ -33,7 +33,7 @@ const NewMusicPage = () => {
       year: formData.get("year"),
     };
 
-    fetch(`${API_URL}/musics/${playlistId}`, {
+    fetch(`${API_URL}/comment/${postId}`, {
       method: "POST",
       headers: {
         Authorization: auth.token,
@@ -52,20 +52,20 @@ const NewMusicPage = () => {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Music added to playlist",
+          text: "Comment added to post",
           timer: 2500,
         }).then(() => {
-          navigate(`/playlist/${playlistId}`);
+          navigate(`/post/${postId}`);
         });
       }
     });
   };
 
   useEffect(() => {
-    getPlaylist(playlistId);
+    getPost(postId);
   }, []);
 
-  if (!playlist) {
+  if (!post) {
     return (
       <div className="container-fluid d-flex flex-column justify-content-center align-items-center mt-4">
         <h3 className="text-center mt-4">Loading...</h3>
@@ -75,7 +75,7 @@ const NewMusicPage = () => {
 
   return (
     <div className="container-fluid d-flex flex-column justify-content-center align-items-center mt-4">
-      <h1 className="text-center">New Music from "{playlist.title}"</h1>
+      <h1 className="text-center">New comment from "{post.title}"</h1>
 
       <form
         className="d-flex flex-column mt-4 gap-2"
@@ -120,4 +120,4 @@ const NewMusicPage = () => {
   );
 };
 
-export default NewMusicPage;
+export default NewCommentPage;

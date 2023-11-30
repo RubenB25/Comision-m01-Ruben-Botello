@@ -1,25 +1,25 @@
-import PlayItem from "../components/PlayItem";
+import PlayItem from "../components/PostItem";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { API_URL } from "../utils/consts";
 import { Link } from "react-router-dom";
 import styles from "../styles/Playlist.module.css";
-const PlaylistPage = () => {
-  const [playlists, setPlaylists] = useState([]);
-  const [filteredPlaylists, setFilteredPlaylists] = useState([]);
+const PostsPage = () => {
+  const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   const [search, setSearch] = useState("");
 
   const { auth } = useContext(AuthContext);
 
   const getAllPlaylist = () => {
-    fetch(`${API_URL}/playlist`, {
+    fetch(`${API_URL}/post`, {
       headers: {
         Authorization: auth.token,
       },
     })
       .then((res) => res.json())
-      .then((data) => setPlaylists(data));
+      .then((data) => setPosts(data));
   };
 
   useEffect(() => {
@@ -27,18 +27,18 @@ const PlaylistPage = () => {
   }, []);
 
   useEffect(() => {
-    const filtereds = playlists.filter((play) => {
-      return play.title.toLowerCase().includes(search.toLowerCase().trim());
+    const filtereds = posts.filter((postF) => {
+      return postF.title.toLowerCase().includes(search.toLowerCase().trim());
     });
 
-    setFilteredPlaylists(filtereds);
-  }, [playlists, search]);
+    setFilteredPosts(filtereds);
+  }, [posts, search]);
 
   return (
     <div className={styles.container}>
       <h1>Tus publicaciones</h1>
       <div className="w-50 d-flex flex-row gap-2 mt-4">
-        <Link className="btn btn-success" to="/playlist/new">
+        <Link className="btn btn-success" to="/post/new">
           Crear publicación
         </Link>
         <input
@@ -50,15 +50,17 @@ const PlaylistPage = () => {
         />
       </div>
       <div className="w-50 d-flex flex-column gap-2 mt-4">
-        {filteredPlaylists.map((play) => {
+        {filteredPosts.map((postF) => {
           return (
             <PlayItem
-              key={play._id}
-              playlistId={play._id}
-              title={play.title}
-              username={play.author.username}
-              avatar={play.author.avatar}
-              comments={play.comments}
+              key={postF._id}
+              postId={postF._id}
+              title={postF.title}
+              url={postF.url}
+              content={postF.content}
+              username={postF.author.username}
+              avatar={postF.author.avatar}
+              comments={postF.comments}
               refresh={getAllPlaylist}
             />
           );
@@ -68,4 +70,4 @@ const PlaylistPage = () => {
   );
 };
 
-export default PlaylistPage;
+export default PostsPage;

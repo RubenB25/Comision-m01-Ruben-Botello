@@ -1,18 +1,20 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import { FaPlane } from 'react-icons/fa';
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
 
   return (
     <nav
-      className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body sticky-top"
+      className="navbar navbar-expand-lg bg-body-danger bg-danger border-bottom border-body sticky-top"
       data-bs-theme="dark"
     >
       <div className="container">
-        <Link className="navbar-brand" to="/">
-          Navbar
+        <Link className="navbar-brand" to="/" >
+        <FaPlane size={50}  />
+        TravelPost
         </Link>
         <button
           className="navbar-toggler"
@@ -33,7 +35,7 @@ const Navbar = () => {
                   return isActive ? "nav-link active" : "nav-link";
                 }}
                 aria-current="page"
-                to="/recents"
+                to="/recent"
               >
                 Recientes
               </NavLink>
@@ -44,7 +46,7 @@ const Navbar = () => {
                   return isActive ? "nav-link active" : "nav-link";
                 }}
                 aria-current="page"
-                to="/playlist"
+                to="/posts"
               >
                 Mis publicaciones
               </NavLink>
@@ -54,7 +56,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="d-flex" role="search">
-          <button className="btn btn-outline-danger btn-sm" onClick={logout}>
+          <button className="btn btn-outline-dark btn-sm btn btn-light" onClick={logout}>
             Cerrar sesión
           </button>
         </div>

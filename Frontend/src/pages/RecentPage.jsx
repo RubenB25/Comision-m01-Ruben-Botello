@@ -1,7 +1,7 @@
 import React from 'react'
 import CardsLayout from '../components/CardsLayout'
 
-function RecentsPage() {
+function RecentPage() {
   return (
     <div>
         <CardsLayout />
@@ -9,4 +9,4 @@ function RecentsPage() {
   )
 }
 
-export default RecentsPage
+export default RecentPage

@@ -1,18 +1,18 @@
-import { BsFillTrashFill, BsMusicNoteList } from "react-icons/bs";
+import { BsFillTrashFill, BsJustify, BsMusicNoteList } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { API_URL } from "../utils/consts";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 import styles from "../styles/Playlist.module.css";
-const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onClick }) => {
+const PlayItem = ({ postId, title, avatar, username, comments, refresh, url }) => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleDelete = async (playlistId) => {
-    return await fetch(`${API_URL}/playlist/${playlistId}`, {
+  const handleDelete = async (postId) => {
+    return await fetch(`${API_URL}/post/${postId}`, {
       method: "DELETE",
       headers: {
         Authorization: auth.token,
@@ -21,27 +21,31 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onCl
   };
 
   return (
-    <div className={styles.item} onClick={() => {
-      navigate(`/playlist/${playlistId}`);
+    <div className={styles.item} style={{ backgroundImage: `url(${url})` }} onClick={() => {
+      navigate(`/post/${postId}`);
     }}>
       <div className={styles.section} >
         <div className="col-md-5 ">
-        <h5 className="card-title">{title}</h5>
           <img src={avatar} height={60}
             width={60}
             style={{
               objectFit: "cover",
               borderRadius: "50%",
             }} />
-          
+
           <p className="card-text">
             <b>@{username} </b>
           </p>
         </div>
+        <span>
+          <h2 className="card-title">{title}</h2>
+        </span>
+
         <div className={styles.textContainer}>
+
           <div className="card-body">
 
-            <div className="d-flex flex-row justify-content-between">
+            <div className="d-flex flex-row justify-content-between" >
               <span className="card-text">
                 <small className="text-body-secondary" style={{ display: 'flex', alignItems: 'center' }}>
                   <FaRegComment style={{ marginRight: '2px' }} />{comments.length} Comentarios
@@ -50,7 +54,7 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onCl
               <div>
                 <Link
                   className="btn btn-primary"
-                  to={`/playlist/${playlistId}`}
+                  to={`/post/${postId}`}
                 >
                   <BsMusicNoteList />
                 </Link>
@@ -69,7 +73,7 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onCl
                       confirmButtonText: "¡Si, borrar!",
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        handleDelete(playlistId).then((res) => {
+                        handleDelete(postId).then((res) => {
                           if (res.status !== 200) {
                             return Swal.fire({
                               icon: "error",
@@ -81,7 +85,7 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onCl
                             Swal.fire({
                               title: "¡Eliminado!",
                               text: "Se ha eliminado la publicación.",
-                              icon: "Éxito",
+                              icon: "success",
                             });
                             refresh();
                           }
