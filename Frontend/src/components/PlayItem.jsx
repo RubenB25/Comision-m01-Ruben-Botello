@@ -4,11 +4,13 @@ import Swal from "sweetalert2";
 import { API_URL } from "../utils/consts";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { Link } from "react-router-dom";
-import styles from "../styles/Playlist.module.css";
-const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) => {
-  const { auth } = useContext(AuthContext);
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
+import styles from "../styles/Playlist.module.css";
+const PlayItem = ({ playlistId, title, avatar, username, comments, refresh, onClick }) => {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleDelete = async (playlistId) => {
     return await fetch(`${API_URL}/playlist/${playlistId}`, {
       method: "DELETE",
@@ -19,21 +21,30 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) =>
   };
 
   return (
-    <div className={styles.item}>
-      <div className="row g-0">
-        <div className="col-md-5">
-          <img src={avatar} className="img-fluid rounded-start" />
+    <div className={styles.item} onClick={() => {
+      navigate(`/playlist/${playlistId}`);
+    }}>
+      <div className={styles.section} >
+        <div className="col-md-5 ">
+        <h5 className="card-title">{title}</h5>
+          <img src={avatar} height={60}
+            width={60}
+            style={{
+              objectFit: "cover",
+              borderRadius: "50%",
+            }} />
+          
+          <p className="card-text">
+            <b>@{username} </b>
+          </p>
         </div>
-        <div className="col-md-8">
+        <div className={styles.textContainer}>
           <div className="card-body">
-            <h5 className="card-title">{title}</h5>
-            <p className="card-text">
-              <b>@{username} </b>
-            </p>
+
             <div className="d-flex flex-row justify-content-between">
               <span className="card-text">
-                <small className="text-body-secondary"style={{ display: 'flex', alignItems: 'center' }}>
-                <FaRegComment style={{ marginRight: '2px' }} />{comments.length } Comentarios
+                <small className="text-body-secondary" style={{ display: 'flex', alignItems: 'center' }}>
+                  <FaRegComment style={{ marginRight: '2px' }} />{comments.length} Comentarios
                 </small>
               </span>
               <div>
@@ -45,7 +56,8 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) =>
                 </Link>
                 <button
                   className="btn btn-danger"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     Swal.fire({
                       title: "¿Estás seguro?",
                       text: "¡Esta acción no se puede revertir!",
@@ -62,7 +74,7 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) =>
                             return Swal.fire({
                               icon: "error",
                               title: "Oops...",
-                              text: "Something went wrong!",
+                              text: "¡Algo salió mal!",
                               timer: 2500,
                             });
                           } else {

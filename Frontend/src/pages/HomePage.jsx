@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 function HomePage() {
   return (
     <div className="container-fluid d-flex flex-column justify-content-center align-items-center gap-4 pt-5">
-      <h1 className="text-center">Home page</h1>
+      <h1 className="text-center">Bienvenido a TravelPost</h1>
+      <h2>Sumérgete en aventuras únicas a través de las vivencias de nuestra comunidad viajera</h2>
       <p className="w-75">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse cum
         veniam, tenetur deleniti vel aut quos, blanditiis repellendus numquam
