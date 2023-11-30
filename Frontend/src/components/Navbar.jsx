@@ -1,81 +1,66 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styles from '../styles/Navbar.module.css';
-function Navbar() {
-  const [searchTerm, setSearchTerm] = useState('');
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Lógica para manejar la búsqueda
-    // Puedes usar searchTerm para realizar la búsqueda
-  };
+const Navbar = () => {
+  const { logout } = useContext(AuthContext);
 
   return (
-    <nav className={`navbar navbar-expand-lg ${styles.customNavbar}`}>
-      <div className="container-fluid">
-
-        <Link className={`navbar-brand ${styles.brandText}`} to="/">
+    <nav
+      className="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body sticky-top"
+      data-bs-theme="dark"
+    >
+      <div className="container">
+        <Link className="navbar-brand" to="/">
           Navbar
         </Link>
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarScroll"
-          aria-controls="navbarScroll"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarScroll">
-          <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style={{ '--bs-scroll-height': '300px' }}>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className={`nav-link ${styles.brandText}`} to="/">
+              <NavLink
+                className={({ isActive }) => {
+                  return isActive ? "nav-link active" : "nav-link";
+                }}
+                aria-current="page"
+                to="/recents"
+              >
                 Recientes
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${styles.brandText}`} to="/playlist">
+              <NavLink
+                className={({ isActive }) => {
+                  return isActive ? "nav-link active" : "nav-link";
+                }}
+                aria-current="page"
+                to="/playlist"
+              >
                 Mis publicaciones
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${styles.brandText}`} to="/playlist/new">
-                Crear publicación
-              </Link>
             </li>
           </ul>
-          <Link className={`nav-link p-3 ${styles.brandText}`} to="/login">
-            Iniciar sesión
-          </Link>
-          <Link className={`nav-link p-3 ${styles.brandText}`} to="/register">
-            Registrarse
-          </Link>
-          <div className="col-lg-3">
-            <form className="d-flex" onSubmit={handleSubmit}>
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
-              <button className="btn btn-danger" type="submit">
-                Explorar
-              </button>
-            </form>
-          </div>
-
+        </div>
+        <div className="d-flex" role="search">
+          <button className="btn btn-outline-danger btn-sm" onClick={logout}>
+            Cerrar sesión
+          </button>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

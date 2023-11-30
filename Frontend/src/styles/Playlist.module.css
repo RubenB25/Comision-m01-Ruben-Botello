@@ -33,16 +33,13 @@
   background-color: #f1f1f1;
 }
 
-.item > picture {
-  width: 70px;
-  height: 70px;
-}
+
 
 .item > picture > img {
   height: 70px;
   width: 70px;
   object-fit: cover;
-  border-radius: 50%;
+
 }
 
 .item > section {

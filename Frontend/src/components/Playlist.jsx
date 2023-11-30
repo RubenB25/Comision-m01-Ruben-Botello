@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PlayItem from "./PlayItem";
 import { Link, useNavigate } from "react-router-dom";
-
+import "../styles/Playlist.module.css";
 const Playlist = ({ playlists, getPlaylist }) => {
   // la información que NO vamos a modificar.
   const [search, setSearch] = useState("");

@@ -1,58 +1,89 @@
+import { BsFillTrashFill, BsMusicNoteList } from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { API_URL } from "../utils/consts";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 import { Link } from "react-router-dom";
-import styles from "../styles/Playlist.module.css";
-import { HiOutlineTrash, HiOutlinePencilAlt } from "react-icons/hi";
-import { useId } from "react";
-import DeletePlaylistModel from "./DeletePlaylistModel";
+import "../styles/Playlist.module.css";
+const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) => {
+  const { auth } = useContext(AuthContext);
 
-const PlayItem = ({ playlist, getPlaylist, onClick }) => {
-  const modalId = useId();
+  const handleDelete = async (playlistId) => {
+    return await fetch(`${API_URL}/playlist/${playlistId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: auth.token,
+      },
+    });
+  };
 
   return (
-    <div
-      key={playlist._id}
-      className={styles.item}
-      onClick={(e) => {
-        // stop propagation to avoid triggering the onClick of the parent
-
-        e.stopPropagation();
-
-        onClick();
-      }}
-    >
-      <picture>
-        <img src={playlist.author.avatar} alt={playlist.author.username} />
-      </picture>
-      <section>
-        <h2>{playlist.title}</h2>
-        <p>
-          <b>{playlist.author.username}</b>
-          <span>{playlist.comments.length}</span>
-        </p>
-      </section>
-      <div>
-        <Link
-          style={{ fontSize: "30px", color: "green" }}
-          className="font-warning"
-        >
-          <HiOutlinePencilAlt />
-        </Link>
-        <Link
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          className="font-danger"
-          data-bs-toggle="modal"
-          data-bs-target={"#modal" + playlist._id}
-          style={{ fontSize: "50px", color: "black" }}
-        >
-          <HiOutlineTrash />
-        </Link>
-
-        <DeletePlaylistModel
-          getPlaylist={getPlaylist}
-          modalId={modalId}
-          playlistId={playlist._id}
-        />
+    <div className="card mb-3">
+      <div className="row g-0">
+        <div className="col-md-5">
+          <img src={avatar} className="img-fluid rounded-start" />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">{title}</h5>
+            <p className="card-text">
+              <b>@{username} </b>
+            </p>
+            <div className="d-flex flex-row justify-content-between">
+              <span className="card-text">
+                <small className="text-body-secondary"style={{ display: 'flex', alignItems: 'center' }}>
+                <FaRegComment style={{ marginRight: '2px' }} />{comments.length } Comentarios
+                </small>
+              </span>
+              <div>
+                <Link
+                  className="btn btn-primary"
+                  to={`/playlist/${playlistId}`}
+                >
+                  <BsMusicNoteList />
+                </Link>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    Swal.fire({
+                      title: "¿Estás seguro?",
+                      text: "¡Esta acción no se puede revertir!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      cancelButtonText: "Cancelar",
+                      confirmButtonText: "¡Si, borrar!",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        handleDelete(playlistId).then((res) => {
+                          if (res.status !== 200) {
+                            return Swal.fire({
+                              icon: "error",
+                              title: "Oops...",
+                              text: "Something went wrong!",
+                              timer: 2500,
+                            });
+                          } else {
+                            Swal.fire({
+                              title: "¡Eliminado!",
+                              text: "Se ha eliminado la publicación.",
+                              icon: "Éxito",
+                            });
+                            refresh();
+                          }
+                        });
+                      }
+                    });
+                  }}
+                >
+                  <BsFillTrashFill />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

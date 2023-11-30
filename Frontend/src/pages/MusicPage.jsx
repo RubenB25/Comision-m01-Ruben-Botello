@@ -74,7 +74,7 @@ const MusicPage = () => {
             </tr>
           </thead>
           <tbody>
-            {playlist.musics.map((music) => {
+            {playlist.comments.map((music) => {
               return (
                 <tr key={music._id} className="text-center">
                   <td>{music.name}</td>

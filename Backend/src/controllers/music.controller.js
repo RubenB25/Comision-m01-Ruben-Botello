@@ -15,7 +15,7 @@ export const ctrlCreateMusic = async (req, res) => {
   try {
     const music = new CommentModel({
       ...req.body,
-      posts: playlistId,
+      playlist: playlistId,
     });
 
     await music.save();
@@ -43,9 +43,9 @@ export const ctrlListMusics = async (req, res) => {
   }
 
   try {
-    const musics = await CommentModel.find({ posts: playlistId }, [
+    const musics = await CommentModel.find({ playlist: playlistId }, [
       '-__v',
-    ]).populate('post', ['-musics', '-author', '-__v']);
+    ]).populate('playlist', ['-musics', '-author', '-__v']);
 
     res.status(200).json(musics);
   } catch (error) {

@@ -45,7 +45,6 @@ export const ctrlGetPlaylist = async (req, res) => {
     })
       .populate('author', ['username', 'avatar'])
       .populate('comments', ['name', 'artist', 'year']);
-
     if (!playlist) {
       return res.status(404).json({ error: 'Playlist not found' });
     }

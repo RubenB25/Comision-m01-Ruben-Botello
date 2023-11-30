@@ -3,7 +3,7 @@ import styles from "../styles/AuthForm.module.css";
 import { API_URL } from "../utils/consts";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
-
+import  "../styles/Playlist.module.css";
 const NewPlaylist = () => {
   const titleId = useId();
   const [title, setTitle] = useState("");
