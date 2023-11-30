@@ -5,7 +5,7 @@ import { API_URL } from "../utils/consts";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { Link } from "react-router-dom";
-import "../styles/Playlist.module.css";
+import styles from "../styles/Playlist.module.css";
 const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) => {
   const { auth } = useContext(AuthContext);
 
@@ -19,7 +19,7 @@ const PlayItem = ({ playlistId, title, avatar, username, comments, refresh }) =>
   };
 
   return (
-    <div className="card mb-3">
+    <div className={styles.item}>
       <div className="row g-0">
         <div className="col-md-5">
           <img src={avatar} className="img-fluid rounded-start" />

@@ -49,7 +49,7 @@ const PlaylistPage = () => {
           value={search}
         />
       </div>
-      <div className={styles.section}>
+      <div className="w-50 d-flex flex-column gap-2 mt-4">
         {filteredPlaylists.map((play) => {
           return (
             <PlayItem
