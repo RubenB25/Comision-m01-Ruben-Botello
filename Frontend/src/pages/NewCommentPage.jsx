@@ -28,9 +28,7 @@ const NewCommentPage = () => {
 
     const formData = new FormData(e.target);
     const data = {
-      name: formData.get("name"),
-      artist: formData.get("artist"),
-      year: formData.get("year"),
+      content: formData.get("content"),
     };
 
     fetch(`${API_URL}/comment/${postId}`, {
@@ -85,33 +83,15 @@ const NewCommentPage = () => {
         <div className="form-floating">
           <input
             type="text"
-            name="name"
+            name="content"
+            required
             className="form-control"
-            id="name"
+            id="content"
             placeholder="name@example.com"
           />
-          <label htmlFor="name">Song Name</label>
+          <label htmlFor="content">Comentario</label>
         </div>
-        <div className="form-floating">
-          <input
-            type="text"
-            name="artist"
-            className="form-control"
-            id="artist"
-            placeholder="name@example.com"
-          />
-          <label htmlFor="artist">Artist</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="number"
-            name="year"
-            className="form-control"
-            id="year"
-            placeholder="name@example.com"
-          />
-          <label htmlFor="year">Year</label>
-        </div>
+  
         <button className="btn btn-success" type="submit">
           Create
         </button>

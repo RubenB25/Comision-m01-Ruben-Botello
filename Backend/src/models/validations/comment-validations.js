@@ -7,15 +7,9 @@ export const createCommentValidations = [
     .notEmpty().withMessage('El parametro { postId } no debe estar vacio.')
     .isString().withMessage('El parametro { postId } debe ser un string.')
     .custom(isValidObjectId).withMessage('El parametro { postId } debe ser una id valida.'),
-  body('name')
+  body('content')
     .notEmpty().withMessage('El campo { name } no debe estar vacio.')
     .isString().withMessage('El campo { name } debe ser un string.'),
-  body('artist')
-    .notEmpty().withMessage('El campo { artist } no debe estar vacio.')
-    .isString().withMessage('El campo { artist } debe ser un string.'),
-  body('year')
-    .optional()
-    .isNumeric().withMessage('El campo { year } debe ser un año válido.'),
   applyValidations,
 ];
 

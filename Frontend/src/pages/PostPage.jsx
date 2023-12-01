@@ -60,30 +60,25 @@ const PostPage = () => {
         <h3>@{post.author.username}</h3>
       </div>
       <div className="w-50 d-flex flex-column gap-2 mt-4">
-        <img src={post.url} alt="Imagen Url"/>
+        <img src={post.url} alt="Imagen Url" />
         <p className="text-center">{post.content}</p>
         <h3 className="text-center">Comentarios</h3>
-    
         <table className="table table-bordered">
           <thead>
-            <tr className="text-center" style={{height:"200px"}}>
-              <th scope="col">
-              <div>
-          <Link className="btn btn-success" to={`/comment/${postId}`}>
-            Create
-          </Link>
-        </div>
-              </th>
-    
+            <tr className="text-center" style={{ height: "200px" }}>
+              <div>{post.comments.content}</div>
+            
+
             </tr>
+            <Link className="btn btn-success" to={`/comment/${postId}`}>
+                    Create
+                  </Link>
           </thead>
           <tbody>
             {post.comments.map((comment) => {
               return (
                 <tr key={comment._id} className="text-center">
-                  <td>{comment.name}</td>
-                  <td>{comment.artist}</td>
-                  <td>{comment.year}</td>
+                  <td>{comment.content}</td>
                   <td>
                     <button
                       className="btn btn-danger"

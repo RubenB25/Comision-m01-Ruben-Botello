@@ -1,17 +1,9 @@
 import { Schema, model } from 'mongoose';
 
 const CommentSchema = new Schema({
-  name: {
+  content: {
     type: String,
     required: true,
-  },
-  artist: {
-    type: String,
-    default: 'Unknown',
-  },
-  year: {
-    type: Number,
-    default: new Date(Date.now()).getFullYear(),
   },
   posts: {
     type: Schema.Types.ObjectId,

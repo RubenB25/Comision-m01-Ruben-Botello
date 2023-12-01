@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 import styles from "../styles/Playlist.module.css";
-const PlayItem = ({ postId, title, avatar, username, comments, refresh, url }) => {
+const PostItem = ({ postId, title, avatar, username, comments, refresh, url }) => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleDelete = async (postId) => {
@@ -56,6 +56,7 @@ const PlayItem = ({ postId, title, avatar, username, comments, refresh, url }) =
                   className="btn btn-primary"
                   to={`/post/${postId}`}
                 >
+                  asd
                   <BsMusicNoteList />
                 </Link>
                 <button
@@ -105,4 +106,4 @@ const PlayItem = ({ postId, title, avatar, username, comments, refresh, url }) =
   );
 };
 
-export default PlayItem;
+export default PostItem;

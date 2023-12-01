@@ -1,4 +1,4 @@
-import PlayItem from "../components/PostItem";
+import PostItem from "../components/PostItem";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { API_URL } from "../utils/consts";
@@ -12,7 +12,7 @@ const PostsPage = () => {
 
   const { auth } = useContext(AuthContext);
 
-  const getAllPlaylist = () => {
+  const getAllPost = () => {
     fetch(`${API_URL}/post`, {
       headers: {
         Authorization: auth.token,
@@ -23,7 +23,7 @@ const PostsPage = () => {
   };
 
   useEffect(() => {
-    getAllPlaylist();
+    getAllPost();
   }, []);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const PostsPage = () => {
       <div className="w-50 d-flex flex-column gap-2 mt-4">
         {filteredPosts.map((postF) => {
           return (
-            <PlayItem
+            <PostItem
               key={postF._id}
               postId={postF._id}
               title={postF.title}
@@ -61,7 +61,7 @@ const PostsPage = () => {
               username={postF.author.username}
               avatar={postF.author.avatar}
               comments={postF.comments}
-              refresh={getAllPlaylist}
+              refresh={getAllPost}
             />
           );
         })}
