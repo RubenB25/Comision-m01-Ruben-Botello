@@ -1,0 +1,7 @@
+.infinite-scroll-container{
+    margin: auto;
+    margin-top: 5em;
+    height: 35em;
+    width: 50em;
+    overflow: auto;
+}

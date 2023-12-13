@@ -1,10 +1,10 @@
 import React from 'react'
-import CardsLayout from '../components/CardsLayout'
+import InfiniteScrollC from '../components/InfiniteScrollC'
 
 function RecentPage() {
   return (
     <div>
-        <CardsLayout />
+        <InfiniteScrollC />
     </div>
   )
 }
