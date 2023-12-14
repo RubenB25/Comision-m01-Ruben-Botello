@@ -1,21 +1,15 @@
 import { CommentModel } from '../models/Comment.js';
 import { PostModel } from '../models/Post.js';
-import { isAuthor } from './post.controller.js';
 
 export const ctrlCreateComment = async (req, res) => {
   const { postId } = req.params;
   const userId = req.user._id;
 
-  const isPostAuthor = await isAuthor({ postId, userId });
-
-  if (!isPostAuthor) {
-    return res.status(403).json({ error: 'User is not the post author' });
-  }
-
   try {
     const comment = new CommentModel({
       ...req.body,
       post: postId,
+      author: userId,
     });
 
     await comment.save();
@@ -36,16 +30,11 @@ export const ctrlListComments = async (req, res) => {
   const { postId } = req.params;
   const userId = req.user._id;
 
-  const isPostAuthor = await isAuthor({ postId, userId });
-
-  if (!isPostAuthor) {
-    return res.status(403).json({ error: 'User is not the post author' });
-  }
-
   try {
     const comments = await CommentModel.find({ post: postId }, [
       '-__v',
-    ]).populate('post', ['-comments', '-author', '-__v']);
+    ]).populate('post', ['-comments', 'author', '-__v',])
+    .populate('author',['-__v',"avatar"]);
 
     res.status(200).json(comments);
   } catch (error) {
@@ -57,17 +46,13 @@ export const ctrlGetCommentById = async (req, res) => {
   const { commentId, postId } = req.params;
   const userId = req.user._id;
 
-  const isPostAuthor = await isAuthor({ postId, userId });
-
-  if (!isPostAuthor) {
-    return res.status(403).json({ error: 'User is not the post author' });
-  }
-
   try {
     const comment = await CommentModel.findOne({
       _id: commentId,
-      posts: postId,
-    }).populate('posts');
+      post: postId,
+      author: userId,
+    }).populate('post')
+    .populate('author',['-__v',"avatar"]);
 
     if (!comment) return res.status(404).json({ error: "Comment doesn't exist" });
 
@@ -80,12 +65,6 @@ export const ctrlGetCommentById = async (req, res) => {
 export const ctrlUpdateComment = async (req, res) => {
   const { commentId, postId } = req.params;
   const userId = req.user._id;
-
-  const isPostAuthor = await isAuthor({ postId, userId });
-
-  if (!isPostAuthor) {
-    return res.status(403).json({ error: 'User is not the post author' });
-  }
 
   try {
     const comment = await CommentModel.findOne({ _id: commentId });
@@ -107,12 +86,6 @@ export const ctrlUpdateComment = async (req, res) => {
 export const ctrlDeleteComment = async (req, res) => {
   const { commentId, postId } = req.params;
   const userId = req.user._id;
-
-  const isPostAuthor = await isAuthor({ postId, userId });
-
-  if (!isPostAuthor) {
-    return res.status(403).json({ error: 'User is not the post author' });
-  }
 
   try {
     await CommentModel.findOneAndDelete({ _id: commentId, posts: postId });

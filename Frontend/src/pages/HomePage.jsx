@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 function HomePage() {
+  const { auth,logout } = useContext(AuthContext);
   return (
     <div className="container-fluid d-flex flex-column justify-content-center align-items-center gap-4 pt-5">
       <h1 className="text-center">Bienvenido a TravelPost</h1>
@@ -13,9 +15,17 @@ function HomePage() {
         rerum sint eius quibusdam animi assumenda accusantium deleniti,
         cupiditate exercitationem asperiores?
       </p>
-      <Link className="btn btn-primary btn-lg" to="/posts">
-        Tus publicaciones
-      </Link>
+      <li className="btn btn-primary btn-lg">
+              <NavLink
+                className={({ isActive }) => {
+                  return isActive ? "nav-link active" : "nav-link";
+                }}
+                aria-current="page"
+                to={auth ? "/posts" : "/login"}
+              >
+                Mis publicaciones
+              </NavLink>
+            </li>
     </div>
   );
 }

@@ -19,8 +19,10 @@ const PostPage = () => {
         Authorization: auth.token,
       },
     })
-      .then((res) => res.json())
-      .then((data) => setPost(data));
+    .then((res) => res.json())
+    .then((data) => {
+      setPost(data);
+    });
   };
 
   const handleDelete = (postId, commentId) => {
@@ -66,19 +68,25 @@ const PostPage = () => {
         <table className="table table-bordered">
           <thead>
             <tr className="text-center" style={{ height: "200px" }}>
-              <div>{post.comments.content}</div>
-            
-
+              <th>{post.comments.content}</th>
             </tr>
-            <Link className="btn btn-success" to={`/comment/${postId}`}>
-                    Create
-                  </Link>
           </thead>
+          <tfoot>
+            <tr>
+              <td>
+                <Link className="btn btn-success" to={`/comment/${postId}`}>
+                  Create
+                </Link>
+              </td>
+            </tr>
+          </tfoot>
           <tbody>
+
             {post.comments.map((comment) => {
               return (
                 <tr key={comment._id} className="text-center">
                   <td>{comment.content}</td>
+                  <td><img src={comment.author.avatar} alt="Owner avatar"style={{ height: "50px" }} /></td>
                   <td>
                     <button
                       className="btn btn-danger"

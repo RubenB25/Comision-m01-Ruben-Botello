@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import { FaPlane } from 'react-icons/fa';
 
 const Navbar = () => {
-  const { logout } = useContext(AuthContext);
+  const { auth,logout } = useContext(AuthContext);
 
   return (
     <nav
@@ -13,8 +13,8 @@ const Navbar = () => {
     >
       <div className="container">
         <Link className="navbar-brand" to="/" >
-        <FaPlane size={50}  />
-        TravelPost
+          <FaPlane size={50} />
+          TravelPost
         </Link>
         <button
           className="navbar-toggler"
@@ -46,7 +46,7 @@ const Navbar = () => {
                   return isActive ? "nav-link active" : "nav-link";
                 }}
                 aria-current="page"
-                to="/posts"
+                to={auth ? "/posts" : "/login"}
               >
                 Mis publicaciones
               </NavLink>
@@ -56,11 +56,23 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="d-flex" role="search">
-          <button className="btn btn-outline-dark btn-sm btn btn-light" onClick={logout}>
+        {auth && ( // Si el usuario no ha iniciado sesión, muestra los botones
+        <>
+          <Link to="/login" className="btn btn-outline-dark btn-sm btn btn-light" onClick={logout}>
             Cerrar sesión
-          </button>
+          </Link>
+        </>
+      )}
+          
         </div>
+        {!auth && ( // Si el usuario no ha iniciado sesión, muestra los botones
+        <>
+          <Link to="/login" className="btn btn-outline-dark btn-sm btn btn-light">Iniciar sesión</Link>
+          <Link to="/register" className="btn btn-outline-dark btn-sm btn btn-light">Registrarse</Link>
+        </>
+      )}
       </div>
+      
     </nav>
   );
 };

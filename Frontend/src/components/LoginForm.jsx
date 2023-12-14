@@ -2,12 +2,13 @@ import { useRef } from "react";
 import { API_URL } from "../utils/consts";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 
 function LoginForm() {
   const ref = useRef(null);
 
   const { login } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -42,7 +43,7 @@ function LoginForm() {
 
     ref.current.reset();
 
-    navigate("/");
+    navigate(location.state?.from || "/posts");
   };
 
   return (

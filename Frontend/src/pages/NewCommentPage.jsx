@@ -29,6 +29,7 @@ const NewCommentPage = () => {
     const formData = new FormData(e.target);
     const data = {
       content: formData.get("content"),
+      author: auth.user._id,
     };
 
     fetch(`${API_URL}/comment/${postId}`, {
@@ -91,6 +92,7 @@ const NewCommentPage = () => {
           />
           <label htmlFor="content">Comentario</label>
         </div>
+        
   
         <button className="btn btn-success" type="submit">
           Create

@@ -9,7 +9,7 @@ function PrivateRoutes() {
 
   useEffect(() => {
     if (auth === null) {
-      navigate("/login");
+      navigate("/");
     }
   }, [auth, navigate]);
 

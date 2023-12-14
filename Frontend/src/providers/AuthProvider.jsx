@@ -16,7 +16,7 @@ function AuthProvider({ children }) {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     setAuth(null);
-    window.location.replace("/login");
+    window.location.replace("/");
   };
 
   useEffect(() => {

@@ -10,6 +10,10 @@ export const createCommentValidations = [
   body('content')
     .notEmpty().withMessage('El campo { name } no debe estar vacio.')
     .isString().withMessage('El campo { name } debe ser un string.'),
+  body('author')
+    .notEmpty().withMessage('El campo { author } no debe estar vacio.')
+    .isString().withMessage('El campo { author } debe ser un string.')
+    .custom(isValidObjectId).withMessage('El campo { author } debe ser una id valida.'),
   applyValidations,
 ];
 
