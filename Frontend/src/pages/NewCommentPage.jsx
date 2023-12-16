@@ -44,14 +44,14 @@ const NewCommentPage = () => {
         return Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Something went wrong!",
+          text: "¡Algo salió mal",
           timer: 2500,
         });
       } else {
         Swal.fire({
           icon: "success",
-          title: "Success",
-          text: "Comment added to post",
+          title: "¡Éxito!",
+          text: "¡Comentario creado!",
           timer: 2500,
         }).then(() => {
           navigate(`/post/${postId}`);
@@ -74,7 +74,7 @@ const NewCommentPage = () => {
 
   return (
     <div className="container-fluid d-flex flex-column justify-content-center align-items-center mt-4">
-      <h1 className="text-center">New comment from "{post.title}"</h1>
+      <h1 className="text-center">Agregar nuevo comentario a "{post.title}"</h1>
 
       <form
         className="d-flex flex-column mt-4 gap-2"
@@ -95,7 +95,7 @@ const NewCommentPage = () => {
         
   
         <button className="btn btn-success" type="submit">
-          Create
+          Publicar comentario
         </button>
       </form>
     </div>

@@ -12,10 +12,10 @@ const Navbar = () => {
       data-bs-theme="dark"
     >
       <div className="container">
-        <Link className="navbar-brand" to="/" >
-          <FaPlane size={50} />
-          TravelPost
-        </Link>
+      <Link className="navbar-brand" to="/">
+  <img src="travelPost-Logo.png" alt="logo" style={{width: 50, height: 50}} />
+  TravelPost
+</Link>
         <button
           className="navbar-toggler"
           type="button"

@@ -41,8 +41,13 @@ function RegisterForm() {
   };
 
   return (
+    <div
+      className="w-100 d-flex justify-content-center align-items-center h-100"
+      style={{ minWidth: "100vw" }}
+    >
+    
     <form onSubmit={handleSubmit} ref={ref}>
-      <h1 className="h3 mb-3 fw-normal">Sign up</h1>
+      <h1 className="h3 mb-3 fw-normal">Registrarse</h1>
       <div className="form-floating">
         <input
           type="url"
@@ -61,7 +66,7 @@ function RegisterForm() {
           id="username"
           placeholder="name@example.com"
         />
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Nombre de Usuario</label>
       </div>
       <div className="form-floating">
         <input
@@ -71,7 +76,7 @@ function RegisterForm() {
           id="email"
           placeholder="name@example.com"
         />
-        <label htmlFor="email">Email address</label>
+        <label htmlFor="email">Email</label>
       </div>
       <div className="form-floating">
         <input
@@ -81,7 +86,7 @@ function RegisterForm() {
           id="password"
           placeholder="Password"
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Contraseña</label>
       </div>
 
       <div className="form-check text-start my-3">
@@ -92,14 +97,15 @@ function RegisterForm() {
           id="flexCheckDefault"
         />
         <label className="form-check-label" htmlFor="flexCheckDefault">
-          Remember me
+          Recordarme
         </label>
       </div>
       <button className="btn btn-primary w-100 py-2" type="submit">
-        Sign up
+        Registrarse
       </button>
       <p className="mt-3 mb-3 text-body-secondary">&copy; 2017–2023</p>
     </form>
+  </div>
   );
 }
 

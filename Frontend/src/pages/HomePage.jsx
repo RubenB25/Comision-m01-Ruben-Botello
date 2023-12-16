@@ -8,12 +8,8 @@ function HomePage() {
       <h1 className="text-center">Bienvenido a TravelPost</h1>
       <h2>Sumérgete en aventuras únicas a través de las vivencias de nuestra comunidad viajera</h2>
       <p className="w-75">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse cum
-        veniam, tenetur deleniti vel aut quos, blanditiis repellendus numquam
-        doloribus suscipit amet quaerat a ab doloremque aliquid debitis earum
-        nostrum. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga
-        rerum sint eius quibusdam animi assumenda accusantium deleniti,
-        cupiditate exercitationem asperiores?
+        
+¡Explora el mundo a través de los ojos de los aventureros! En TravelPost, cada experiencia es una historia que aguarda ser compartida. Descubre destinos, conecta con viajeros apasionados y sumérgete en un océano de culturas diversas. Únete a nuestra comunidad y haz que tus viajes perduren a través de relatos, fotos y conexiones que trascienden fronteras. ¡Encuentra inspiración y comparte la tuya en cada paso del camino!
       </p>
       <li className="btn btn-primary btn-lg">
               <NavLink

@@ -3,7 +3,6 @@ import { API_URL } from "../utils/consts";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate,useLocation } from "react-router-dom";
-
 function LoginForm() {
   const ref = useRef(null);
 
@@ -52,7 +51,7 @@ function LoginForm() {
       style={{ minWidth: "100vw" }}
     >
       <form onSubmit={handleSubmit} ref={ref}>
-        <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 fw-normal">Iniciar sesión</h1>
 
         <div className="form-floating">
           <input
@@ -62,7 +61,7 @@ function LoginForm() {
             id="floatingInput"
             placeholder="name@example.com"
           />
-          <label htmlFor="floatingInput">Email address</label>
+          <label htmlFor="floatingInput">Email</label>
         </div>
         <div className="form-floating">
           <input
@@ -72,7 +71,7 @@ function LoginForm() {
             id="floatingPassword"
             placeholder="Password"
           />
-          <label htmlFor="floatingPassword">Password</label>
+          <label htmlFor="floatingPassword">Contraseña</label>
         </div>
 
         <div className="form-check text-start my-3">
@@ -83,11 +82,11 @@ function LoginForm() {
             id="flexCheckDefault"
           />
           <label className="form-check-label" htmlFor="flexCheckDefault">
-            Remember me
+            Recordarme
           </label>
         </div>
         <button className="btn btn-primary w-100 py-2" type="submit">
-          Sign in
+          Iniciar sesión
         </button>
         <p className="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
       </form>

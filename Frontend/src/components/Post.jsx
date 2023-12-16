@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import PlayItem from "./PostItem";
+import PostItem from "./PostItem";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Playlist.module.css";
 const Post = ({ posts, getPost}) => {
@@ -31,12 +31,12 @@ const Post = ({ posts, getPost}) => {
       <>
         {filterPosts.map((post) => {
           return (
-            <PlayItem
+            <PostItem
               getPost={getPost}
               key={post._id}
               post={post}
               onClick={() => {
-                navigate(`/playlist/${post._id}`);
+                navigate(`/post/${post._id}`);
               }}
             />
           );

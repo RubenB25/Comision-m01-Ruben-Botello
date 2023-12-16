@@ -10,7 +10,6 @@ export const createPostValidations = [
 ];
 
 export const listPostValidations = [
-  header('authorization').exists(),
   applyValidations,
 ];
 

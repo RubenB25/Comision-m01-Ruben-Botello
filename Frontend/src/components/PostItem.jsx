@@ -52,13 +52,6 @@ const PostItem = ({ postId, title, avatar, username, comments, refresh, url }) =
                 </small>
               </span>
               <div>
-                <Link
-                  className="btn btn-primary"
-                  to={`/post/${postId}`}
-                >
-                  asd
-                  <BsMusicNoteList />
-                </Link>
                 <button
                   className="btn btn-danger"
                   onClick={(e) => {

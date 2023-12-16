@@ -10,6 +10,7 @@ import PostPage from "./pages/PostPage";
 // import MusicPage from "./pages/MusicPage";
 import NewCommentPage from "./pages/NewCommentPage"; 
 import RecentPage from "./pages/RecentPage";
+import Navbar from "./components/Navbar";
 function AppRouter() {
   return (
     <Routes>
@@ -24,8 +25,8 @@ function AppRouter() {
       </Route>
 
       {/* Rutas Públicas */}
-      <Route path="/login" element={<LoginForm />} />
-      <Route path="/register" element={<RegisterForm />} />
+      <Route path="/login" element={<><Navbar /><LoginForm /></>} />
+      <Route path="/register" element={<><Navbar /><RegisterForm /></>} />
 
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

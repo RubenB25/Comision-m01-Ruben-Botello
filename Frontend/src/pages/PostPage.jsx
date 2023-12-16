@@ -15,9 +15,7 @@ const PostPage = () => {
 
   const getPost = (postId) => {
     fetch(`${API_URL}/post/${postId}`, {
-      headers: {
-        Authorization: auth.token,
-      },
+      
     })
     .then((res) => res.json())
     .then((data) => {
@@ -66,16 +64,11 @@ const PostPage = () => {
         <p className="text-center">{post.content}</p>
         <h3 className="text-center">Comentarios</h3>
         <table className="table table-bordered">
-          <thead>
-            <tr className="text-center" style={{ height: "200px" }}>
-              <th>{post.comments.content}</th>
-            </tr>
-          </thead>
           <tfoot>
             <tr>
               <td>
                 <Link className="btn btn-success" to={`/comment/${postId}`}>
-                  Create
+                  Crear comentario
                 </Link>
               </td>
             </tr>
@@ -84,21 +77,23 @@ const PostPage = () => {
 
             {post.comments.map((comment) => {
               return (
-                <tr key={comment._id} className="text-center">
-                  <td>{comment.content}</td>
-                  <td><img src={comment.author.avatar} alt="Owner avatar"style={{ height: "50px" }} /></td>
-                  <td>
+                <tr key={comment._id} >
+                  <td className="commentContainer"><p>@{comment.author.username}</p>
+                    <img src={comment.author.avatar} alt="Owner avatar"style={{ height: "50px" }} />
+                    {comment.content}
+                    <div className="buttonContainer">
                     <button
                       className="btn btn-danger"
                       onClick={() => {
                         Swal.fire({
-                          title: "Are you sure?",
-                          text: "You won't be able to revert this!",
+                          title: "¿Está seguro que quiere eliminar el comentario??",
+                          text: "¡Esta acción no se puede revertir!",
                           icon: "warning",
                           showCancelButton: true,
                           confirmButtonColor: "#3085d6",
                           cancelButtonColor: "#d33",
-                          confirmButtonText: "Yes, delete it!",
+                          cancelButtonText: "Cancelar",
+                          confirmButtonText: "¡Si, borrar!",
                         }).then((result) => {
                           if (result.isConfirmed) {
                             handleDelete(postId, comment._id).then((res) => {
@@ -106,13 +101,13 @@ const PostPage = () => {
                                 return Swal.fire({
                                   icon: "error",
                                   title: "Oops...",
-                                  text: "Something went wrong!",
+                                  text: "¡Algo salió mal!",
                                   timer: 2500,
                                 });
                               } else {
                                 Swal.fire({
-                                  title: "Deleted!",
-                                  text: "Your file has been deleted.",
+                                  title: "¡Eliminado!",
+                                  text: "Se ha eliminado el comentario.",
                                   icon: "success",
                                 });
                                 getPost(postId);
@@ -124,10 +119,10 @@ const PostPage = () => {
                     >
                       <BsFillTrashFill />
                     </button>
-                    <button className="btn btn-warning">
-                      <BsFillPencilFill />
-                    </button>
-                  </td>
+  
+                    </div>
+                    </td>
+             
                 </tr>
               );
             })}

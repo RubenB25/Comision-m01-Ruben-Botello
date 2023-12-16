@@ -22,6 +22,21 @@ export const ctrlCreatePost = async (req, res) => {
   }
 };
 
+// Exportamos la función ctrlListAllPosts que lista todos los posts
+
+export const ctrlListAllPosts = async (req, res) => {
+  try {
+    const posts = await PostModel.find()
+      .populate('author', ['username', 'avatar'])
+      .populate('comments', ['content','author', 'createdAt']);
+
+    return res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+// Exportamos la función ctrlListPosts que lista los posts de un usuario
 export const ctrlListPosts = async (req, res) => {
   const userId = req.user._id;
 
@@ -36,14 +51,13 @@ export const ctrlListPosts = async (req, res) => {
   }
 };
 
+// Exportamos la función ctrlGetPost que obtiene un post
 export const ctrlGetPost = async (req, res) => {
-  const userId = req.user._id;
   const { postId } = req.params;
 
   try {
     const post = await PostModel.findOne({
       _id: postId,
-      author: userId,
     })
     .populate('author', ['username', 'avatar'])
     .populate({
@@ -53,6 +67,7 @@ export const ctrlGetPost = async (req, res) => {
         select: 'username avatar'
       }
     });
+
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
@@ -62,6 +77,7 @@ export const ctrlGetPost = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+// Exportamos la función ctrlUpdatePost que actualiza un post
 
 export const ctrlUpdatePost = async (req, res) => {
   const userId = req.user._id;
@@ -86,6 +102,8 @@ export const ctrlUpdatePost = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+// Exportamos la función ctrlDeletePost que elimina un post
 
 export const ctrlDeletePost = async (req, res) => {
   const userId = req.user._id;
@@ -114,6 +132,7 @@ export const ctrlDeletePost = async (req, res) => {
   }
 };
 
+// Exportamos la función isAuthor que verifica si el usuario es el autor del post
 export const isAuthor = async ({ postId, userId }) => {
   try {
     const post = await PostModel.findOne({
