@@ -18,8 +18,7 @@ Abrir el navegador e ir a `http://localhost:4000`.
 ## Iniciar el Frontend
 1. Navegar a la carpeta del frontend: `cd frontend`
 2. Instalar las dependencias: `npm install`
-3. Copiar `.env.example` a `.env` y llenar las variables de entorno
-4. Iniciar el servidor de desarrollo: `npm run dev`
+3. Iniciar el servidor de desarrollo: `npm run dev`
 
 ## Uso
 
